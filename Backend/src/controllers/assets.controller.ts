@@ -6,6 +6,7 @@ import {
   deleteAsset,
   getAssetsById,
   updateAsset,
+  updateAsset,
 } from "../services/User-Services/assets.service";
 import { updateSchema } from "../validators/asset/asset.validator";
 import { ZodError } from "zod";

@@ -1,10 +1,6 @@
-import express from "express";
-import {
-  signup,
-  login,
-  logout,
-  resetPassword,
-} from "../controllers/authController";
+
+import express from 'express';
+import { signup, login, logout, resetPassword } from "../controllers/authController";
 
 import { validateData } from "../middleware/validationMiddleware";
 import signupSchema from "../validators/user/user.validator";
