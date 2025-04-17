@@ -17,8 +17,7 @@ if (!JWT_SECRET) {
 
 export const signup = async (req: Request, res: Response): Promise<void> => {
   try {
-    // Validating email using Zod library
-    //const parsedData = signupSchema.parse(req.body);
+    // Deconstructing the body
     const { name, email, password, role } = req.body;
 
     // Check if user already exists

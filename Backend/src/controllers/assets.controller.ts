@@ -13,7 +13,7 @@ import { nanoid } from "nanoid";
 
 export const create = async (req: Request, res: Response) => {
   try {
-    // const validatedAsset = assetSchema.parse(req.body);
+    // Adding assetId to validated new asset
     const data = req.body;
     const saveAsset = { assetId: nanoid(), ...data };
     console.log("we managed to validate the asset !!!", saveAsset);
