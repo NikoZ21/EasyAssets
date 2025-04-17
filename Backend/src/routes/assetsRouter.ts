@@ -1,7 +1,4 @@
 import { Router } from "express";
-
-const router = Router();
-
 import {
   create,
   getAll,
@@ -10,6 +7,11 @@ import {
   updatedRoute,
   authAdmin,
 } from "../controllers/assets.controller";
+
+import { validateData } from "../middleware/validationMiddleware";
+import { assetSchema } from "../validators/asset/asset.validator";
+
+const router = Router();
 
 /**
  * @swagger
@@ -80,7 +82,7 @@ router.get("/", getAll);
 *       500:
 *         description: Internal server error
 */
-router.post("/", authAdmin, create);
+router.post("/", authAdmin, validateData(assetSchema), create);
 
 /**
  * @swagger

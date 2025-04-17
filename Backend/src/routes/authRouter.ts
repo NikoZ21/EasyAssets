@@ -6,6 +6,9 @@ import {
   resetPassword,
 } from "../controllers/authController";
 
+import { validateData } from "../middleware/validationMiddleware";
+import signupSchema from "../validators/user/user.validator";
+
 const router = express.Router();
 
 /**
@@ -42,7 +45,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.post("/signup", signup);
+router.post("/signup", validateData(signupSchema), signup);
 
 /**
  * @swagger

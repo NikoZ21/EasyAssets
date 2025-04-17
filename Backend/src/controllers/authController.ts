@@ -16,22 +16,30 @@ if (!JWT_SECRET) {
 }
 
 export const signup = async (req: Request, res: Response): Promise<void> => {
-  const { name, email, password, role } = req.body || {};
-
   try {
+    // Validating email using Zod library
+    //const parsedData = signupSchema.parse(req.body);
+    const { name, email, password, role } = req.body;
+
+    // Check if user already exists
     const existingUser = await getUserByEmail(email);
     if (existingUser) {
       res.status(400).json({ success: false, message: "User already exists" });
       return;
     }
+
+    // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create new user
     await createUser({
       name,
       email,
       role,
       password: hashedPassword,
     });
+
     res
       .status(201)
       .json({ success: true, message: "User created successfully" });
@@ -41,6 +49,7 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
       .json({ success: false, message: "Something went wrong", error: err });
   }
 };
+
 export const login = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body || {};
   if (!email || !password) {

@@ -5,20 +5,20 @@ import {
   getAssets,
   deleteAsset,
   getAssetsById,
-  updateAseet,
+  updateAsset,
 } from "../services/User-Services/assets.service";
-import { assetSchema, updateSchema } from "../validators/asset/asset.validator";
+import { updateSchema } from "../validators/asset/asset.validator";
 import { ZodError } from "zod";
-import { v4 as createUniqueId } from "uuid";
 import { nanoid } from "nanoid";
 
 export const create = async (req: Request, res: Response) => {
   try {
-    const validatedAsset = assetSchema.parse(req.body);
-    const saveAsset = { assetId: nanoid(), ...validatedAsset };
+    // const validatedAsset = assetSchema.parse(req.body);
+    const data = req.body;
+    const saveAsset = { assetId: nanoid(), ...data };
     console.log("we managed to validate the asset !!!", saveAsset);
 
-    await createAsset(req.body);
+    await createAsset(saveAsset);
 
     console.log("we managed to create the asset in the database !!!");
     res.status(201).json({ message: "Data is created" });
@@ -152,8 +152,8 @@ export const updatedRoute = async (req: Request, res: Response) => {
       });
       return;
     }
-    const upadatedData = req.body;
-    const modified = await updateAseet(id, upadatedData);
+    const updatedData = req.body;
+    const modified = await updateAsset(id, updatedData);
 
     if (!modified) {
       res.status(400).json({

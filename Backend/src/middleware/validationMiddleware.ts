@@ -9,10 +9,12 @@ export function validateData(schema: z.ZodSchema<any, any>) {
       next();
     } catch (error) {
       if (error instanceof ZodError) {
-        return res.status(300).json({
+        res.status(300).json({
           message: "Validation error",
           errors: error.errors,
         });
+
+        return;
       }
       console.log("Validation error");
       next(error);
